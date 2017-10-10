@@ -7,7 +7,7 @@ function setup(){
 	createCanvas(w, h);
 	agentColors = [color(255, 0, 0), color(0, 0, 255)];
 	background(51);
-	SM = new SchellingsModel(50, 50, 10, 1, 30);
+	SM = new SchellingsModel(50, 50, 10, 1, 50);
 	// SM.checkNeighbour();
 	// SM.moveAgents();	
 	// SM.show();
