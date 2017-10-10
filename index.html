@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<script src="addons/p5.min.js"></script>
+	<script src="addons/p5.dom.min.js"></script>
+	<script src="addons/p5.sound.min.js"></script>
+	<script src="sketch.js"></script>
+	<style>
+	/*class description*/
+	.description{
+		position: absolute;
+		left: 5px;
+		top: 355px;
+		width: 320px;
+		background: #fff;
+		color: #000;
+		font-family: Helvetica;
+		font-weight: bolder;
+		font-size: 15px;
+		border: solid 3px #000;
+		z-index: 1;
+		padding: 5px 5px 3px 5px;
+	}
+	/*.description txt{
+		background: #fff;
+	}
+	/*class stopwatch*/
+	.stpwatch{
+		position: absolute;
+		left: 5px;
+		top: 305px;
+		background: #fff;
+		color: #000;
+		font-family: Helvetica;
+		font-weight: bolder;
+		font-size: 20px;
+		border: solid 3px #000;
+		cursor: ne-resize;
+		z-index: 1;
+		padding: 5px 5px 3px 5px;
+	}
+	/*class array text*/
+	.array{
+		text-align: justify;
+		width: 100%;
+		font-family: monospace;
+		font-size: 10px;
+	}
+	.waves{
+		position:fixed;
+		top: 55px;
+		left: 5px;
+		background: #fff;
+		color: #000;
+		padding: 0px;
+		font-family: Helvetica;
+		font-weight: bolder;
+		font-size: 20px;
+		border: none;
+		cursor: ne-resize;
+		z-index: 1;
+	}
+	/*class kernel*/
+	.sorting{
+		position:fixed;
+		top: 5px;
+		left: 5px;
+		background: #fff;
+		color: #000;
+		padding: 0px;
+		font-family: Helvetica;
+		font-weight: bolder;
+		font-size: 20px;
+		border: none;
+		cursor: ne-resize;
+		z-index: 1;
+	}
+	.inputRange{
+		position: absolute;
+		left: 185px;
+		background: #fff;
+		color: #000;
+		font-family: Helvetica;
+		font-weight: bolder;
+		font-size: 20px;
+		border: solid 3px #000;
+		cursor: ne-resize;
+		z-index: 1;
+		padding: 5px;
+	}
+	.top{
+		position: absolute;
+		left: 185px;
+		top: 105px;
+		background: #fff;
+		color: #000;
+		font-family: Helvetica;
+		font-weight: bolder;
+		font-size: 15px;
+		border: solid 3px #000;
+		cursor: ne-resize;
+		z-index: 1;
+		padding: 5px 5px 3px 5px;
+	}
+	.middle{
+		position: absolute;
+		left: 185px;
+		top: 155px;
+		background: #fff;
+		color: #000;
+		font-family: Helvetica;
+		font-weight: bolder;
+		font-size: 15px;
+		border: solid 3px #000;
+		cursor: ne-resize;
+		z-index: 1;
+		padding: 5px 5px 3px 5px;
+	}
+	.bottom{
+		position: absolute;
+		left: 185px;
+		top: 205px;
+		background: #fff;
+		color: #000;
+		font-family: Helvetica;
+		font-weight: bolder;
+		font-size: 15px;
+		border: solid 3px #000;
+		cursor: ne-resize;
+		z-index: 1;
+		padding: 5px 5px 3px 5px;
+	}
+	body{
+		margin: 0;
+	}
+	/*styling the select element*/
+	select {
+		font-family: Helvetica;
+		font-weight: bolder;
+		font-size: 20px;
+		padding-top: 3px;
+		padding-right: 3px;
+	}
+	select:hover{
+		color: #000;
+		background-color: #fff;
+	}
+	select:not([multiple]){
+		-webkit-appearance:none;
+		-moz-appearance:none;
+		border: solid 3px #000; 
+	}
+	/*styling the single entries of the list*/
+	option{
+		border: solid 1px #000;
+		font-size: 15px;
+		padding-top: 3px;
+	}
+	option:hover{
+		letter-spacing: 5px;
+	}
+	input{	
+		top: 105px;
+		left: 5px;	
+		background: #fff;
+		position: absolute;
+		width: 150px;
+		border: solid 3px #000;
+		height: 20px;
+		float: left;
+	}
+	/*styling buttons*/
+	button{
+		position: absolute;
+		left: 5px;
+		background-color: #fff;
+		border: solid 3px #000;
+		font-family: Helvetica;
+		font-weight: bolder;
+		font-size: 20px;
+		padding-top: 3px;
+	}
+	blockquote{
+		font-style: italic;
+		font-size: 13px;
+	}
+	a{
+		color: #f00;
+		border-bottom: none;
+	}
+	a:hover{
+		letter-spacing: 3px;
+	}
+</style>
+</head>
+<body bgcolor="#FFF">
+</body>
+</html>
