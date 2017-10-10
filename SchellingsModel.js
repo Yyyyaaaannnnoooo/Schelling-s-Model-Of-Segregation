@@ -15,7 +15,7 @@ class SchellingsModel{
 		//initialize the model by filling the 2D array with agents
 		for (let y = 1; y < this.rows - 1; y++){
 			for (let x = 1; x < this.cols - 1; x++){
-				if(floor(random(100)) > freeCells)agents[x][y] = new Agent(satisfaction, random(100)>percentage?0:1, threshold);
+				if(floor(random(100)) > freeCells)agents[x][y] = new Agent(satisfaction, random(100)>percentage?0:1, floor(random(1, 9)) * 10);//set to common threshold
 			}
 		}
 	}
