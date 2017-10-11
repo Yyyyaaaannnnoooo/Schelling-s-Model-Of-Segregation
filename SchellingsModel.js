@@ -4,18 +4,20 @@ class SchellingsModel{
 	* @param {int} size - number of colums and rows of the grid
 	* @param {int} percentage - percentage of agents of one type or another
 	* @param {int} freeCells - percentage of free cells in the grid
-	* @param {float} satisfaction - float bewtween 0 - 1 that determines
-	* the satisfaction of a single agent 
+	* @param {int} agentKind - how many different kind of agnts are present on the 
 	* @param {int} threshold - maximum amount of "fremd" neighbour the agent can have
+	* @param {boolean} randomizedThreshold - if true the schelling's model starts with randomized thresholds
+	  that change according to how much the agent had to move.
 	*/
-	constructor(size, percentage, freeCells, satisfaction, threshold){
+	constructor(size, percentage, freeCells, agentKind, threshold, randomizedThreshold){
 		this.cols = this.rows = size + 1;
 		this.r = floor(gridSize / size + 1);
+		this.AK = agentKind;
 		agents = matrix(this.rows, this.cols, null);
 		//initialize the model by filling the 2D array with agents
 		for (let y = 1; y < this.rows - 1; y++){
 			for (let x = 1; x < this.cols - 1; x++){
-				if(floor(random(100)) > freeCells)agents[x][y] = new Agent(satisfaction, random(100)>percentage?0:1, floor(random(1, 9)) * 10);//set to common threshold
+					if(floor(random(100)) > freeCells)agents[x][y] = new Agent(floor(random(agentKind)), randomizedThreshold == true ? floor(random(1, 9)) * 10 : threshold);
 			}
 		}
 	}
@@ -23,7 +25,7 @@ class SchellingsModel{
 	show(){		
 		for (let y = 1; y < this.rows - 1; y++){
 			for (let x = 1; x < this.cols - 1; x++){
-				if(agents[x][y] != null) agents[x][y].show(x * this.r, y * this.r, this.r);
+				if(agents[x][y] != null) agents[x][y].show(300 + x * this.r, y * this.r, this.r);
 			}
 		}
 	}
@@ -60,12 +62,15 @@ class SchellingsModel{
 			// 		newY = arr[i].y;
 			// 	}
 			// }
-			let index = floor(random(arr.length));
+			let index = floor(random(arr.length));//check for a random position
 			newX = arr[index].x;
 			newY = arr[index].y;
 			agents[newX][newY] = agents[x][y];
 			agents[x][y] = null;
-			freeSpots = emptySpots(agents);
+			//we play a note according to the distance the agent had to move
+			d = dist(x, y, newX, newY);
+			playSound(d);
+			freeSpots = emptySpots(agents);//uodate the empty position array
 			// console.log(minD, newX, newY);
 		}
 	}
@@ -87,6 +92,8 @@ class SchellingsModel{
 					if(totalSameType > 0){
 						let percSameType = ((totalSameType - 1) / (totalNeighbour -1)) * 100;//we do minus 1 because the loop checks also the agent itself
 						agents[x][y].sat = percSameType >= agents[x][y].t ? 1 : 0;//set the agent satisfaction accoding to the npercentage of same neighbours
+						if(agents[x][y].tu != null)agents[x][y].sat = percSameType >= agents[x][y].tu ? 0 : 1;
+						//it could also be possible to decrease the satisfaction to 0 instead of changing it directly
 					} else agents[x][y].sat = 0;// if there is none of the same type near than the agent is unsatisfied
 					//reset the counters
 					totalNeighbour = 0;
