@@ -15,17 +15,27 @@ function setup(){
 	env.setADSR(0.001, 0.5, 0.1, 0.5);
 	env.setRange(1, 0);
 	// volume0();
-	SM = new SchellingsModel(40, 50, 10, 6, 50, false);
+	// SM = new SchellingsModel(30, 50, 10, 6, 30, false);
 }
 
 function draw(){	
-	if(frameCount % 15 == 0){
-		background(255);
-		SM.checkNeighbour();
-		SM.moveAgents();	
-		SM.show();
+	if(SM != null){
+		if(frameCount % 15 == 0){
+			background(255);
+			SM.checkNeighbour();
+			SM.moveAgents();	
+			SM.show();
+		}
 	}
 	//console.log(frameRate());
+}
+
+function initModel(){
+	let input1 = document.getElementById("kind").value;
+	let input2 = document.getElementById("size").value;
+	let input3 = document.getElementById("thershold").value;
+	let input4 = document.getElementById("freeCell").value;
+	SM = new SchellingsModel(input2, 50, input4, input1, input3, false);
 }
 
 /**
@@ -39,8 +49,8 @@ function volumeUp(){
 	masterVolume(1, 0.5);
 }
 //improve audio!!!!
-function playSound(num){
-	let midiValue = map(num, 0, gridSize / 2, 60, 100);
+function playSound(num, divider){
+	let midiValue = map(num, 0, gridSize / divider, 60, 100);
     var freqValue = midiToFreq(midiValue);
     osc.freq(freqValue);
     env.play(osc, 0, 0.1);

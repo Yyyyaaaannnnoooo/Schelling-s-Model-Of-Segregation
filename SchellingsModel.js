@@ -3,7 +3,7 @@ class SchellingsModel{
 	/**
 	* @param {int} size - number of colums and rows of the grid
 	* @param {int} percentage - percentage of agents of one type or another
-	* @param {int} freeCells - percentage of free cells in the grid
+	* @param {int} freeCells - percentage of free cells in the grid // deprecated
 	* @param {int} agentKind - how many different kind of agnts are present on the 
 	* @param {int} threshold - maximum amount of "fremd" neighbour the agent can have
 	* @param {boolean} randomizedThreshold - if true the schelling's model starts with randomized thresholds
@@ -39,16 +39,6 @@ class SchellingsModel{
 				}
 			}
 		}
-		//checks for empty spots to move the agent
-		function emptySpots(arr2D){
-			let spots = [];
-			for (let row = 1; row < arr2D.length - 1; ++row){
-				for (let col = 1; col < arr2D[row].length - 1; ++col){
-					if(arr2D[row][col] == null)spots.push(createVector(row, col));
-				}
-			}
-			return spots;
-		}
 
 		function moveAgent(x, y, arr){
 			let d = 0, minD = gridSize,
@@ -69,10 +59,21 @@ class SchellingsModel{
 			agents[x][y] = null;
 			//we play a note according to the distance the agent had to move
 			d = dist(x, y, newX, newY);
-			playSound(d);
+			playSound(d, floor(gridSize / size + 1));//improve this using this.r or similar
 			freeSpots = emptySpots(agents);//uodate the empty position array
 			// console.log(minD, newX, newY);
 		}
+		//checks for empty spots to move the agent
+		function emptySpots(arr2D){
+			let spots = [];
+			for (let row = 1; row < arr2D.length - 1; ++row){
+				for (let col = 1; col < arr2D[row].length - 1; ++col){
+					if(arr2D[row][col] == null)spots.push(createVector(row, col));
+				}
+			}
+			return spots;
+		}
+
 	}
 
 	checkNeighbour(){
