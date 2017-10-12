@@ -1,4 +1,4 @@
-let agents = [];
+// let agents = [];
 class SchellingsModel{
 	/**
 	* @param {int} size - number of colums and rows of the grid
@@ -13,11 +13,12 @@ class SchellingsModel{
 		this.cols = this.rows = size + 1;
 		this.r = floor(gridSize / size + 1);
 		this.AK = agentKind;
-		agents = matrix(this.rows, this.cols, null);
+		this.agents = [];
+		this.agents = matrix(this.rows, this.cols, null);
 		//initialize the model by filling the 2D array with agents
 		for (let y = 1; y < this.rows - 1; y++){
 			for (let x = 1; x < this.cols - 1; x++){
-					if(floor(random(100)) > freeCells)agents[x][y] = new Agent(floor(random(agentKind)), randomizedThreshold == true ? floor(random(1, 9)) * 10 : threshold);
+					if(floor(random(100)) > freeCells)this.agents[x][y] = new Agent(floor(random(agentKind)), randomizedThreshold == true ? floor(random(1, 9)) * 10 : threshold);
 			}
 		}
 	}
@@ -25,22 +26,22 @@ class SchellingsModel{
 	show(){		
 		for (let y = 1; y < this.rows - 1; y++){
 			for (let x = 1; x < this.cols - 1; x++){
-				if(agents[x][y] != null) agents[x][y].show(300 + x * this.r, y * this.r, this.r);
+				if(this.agents[x][y] != null) this.agents[x][y].show(300 + x * this.r, y * this.r, this.r);
 			}
 		}
 	}
 
 	moveAgents(){
-		let freeSpots = emptySpots(agents);
+		let freeSpots = emptySpots(this.agents);
 		for (let y = 1; y < this.rows - 1; y++){
 			for (let x = 1; x < this.cols - 1; x++){
-				if(agents[x][y] != null){
-					if(agents[x][y].sat < 1)moveAgent(x, y, freeSpots);
+				if(this.agents[x][y] != null){
+					if(this.agents[x][y].sat < 1)moveAgent(this.agents, x, y, freeSpots);
 				}
 			}
 		}
 
-		function moveAgent(x, y, arr){
+		function moveAgent(agents, x, y, arr){
 			let d = 0, minD = gridSize,
 				newX = 0, newY = 0;
 			// for(let i = 0; i < arr.length; i++){
@@ -60,7 +61,7 @@ class SchellingsModel{
 			//we play a note according to the distance the agent had to move
 			d = dist(x, y, newX, newY);
 			playSound(d, floor(gridSize / size + 1));//improve this using this.r or similar
-			freeSpots = emptySpots(agents);//uodate the empty position array
+			freeSpots = emptySpots(agents);//update the empty position array
 			// console.log(minD, newX, newY);
 		}
 		//checks for empty spots to move the agent
@@ -81,25 +82,25 @@ class SchellingsModel{
 		let totalSameType = 0;
 		for (let y = 1; y < this.rows - 1; y++){
 			for (let x = 1; x < this.cols - 1; x++){
-				if(agents[x][y] != null){//always ignore the null spot
+				if(this.agents[x][y] != null){//always ignore the null spot
 					//////////////////////
 					for(let i = -1; i <= 1; i++){
 						for(let j = -1; j <= 1; j++){
-							if(agents[x + j][y + i] != null)totalNeighbour++;//here we check the number of neighbours
-							if(agents[x + j][y + i] != null && agents[x + j][y + i].type == agents[x][y].type)totalSameType++;
+							if(this.agents[x + j][y + i] != null)totalNeighbour++;//here we check the number of neighbours
+							if(this.agents[x + j][y + i] != null && this.agents[x + j][y + i].type == this.agents[x][y].type)totalSameType++;
 						}
 					}
 					//here we check if the amount of unwanted neighbours surpasses the threshold
 					if(totalSameType > 0){
 						let percSameType = ((totalSameType - 1) / (totalNeighbour -1)) * 100;//we do minus 1 because the loop checks also the agent itself
-						agents[x][y].sat = percSameType >= agents[x][y].t ? 1 : 0;//set the agent satisfaction accoding to the npercentage of same neighbours
-						if(agents[x][y].tu != null)agents[x][y].sat = percSameType >= agents[x][y].tu ? 0 : 1;
+						this.agents[x][y].sat = percSameType >= this.agents[x][y].t ? 1 : 0;//set the agent satisfaction accoding to the npercentage of same neighbours
+						if(this.agents[x][y].tu != null)this.agents[x][y].sat = percSameType >= this.agents[x][y].tu ? 0 : 1;
 						//it could also be possible to decrease the satisfaction to 0 instead of changing it directly
-					} else agents[x][y].sat = 0;// if there is none of the same type near than the agent is unsatisfied
+					} else this.agents[x][y].sat = 0;// if there is none of the same type near than the agent is unsatisfied
 					//reset the counters
 					totalNeighbour = 0;
 					totalSameType = 0;
-				//////////////////////////	end of agents[x][y] !=null if
+				//////////////////////////	end of this.agents[x][y] !=null if
 				}
 			}
 		}
