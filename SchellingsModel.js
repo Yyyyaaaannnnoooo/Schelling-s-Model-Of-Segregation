@@ -15,10 +15,16 @@ class SchellingsModel{
 		this.AK = agentKind;
 		this.agents = [];
 		this.agents = matrix(this.rows, this.cols, null);
+		this.agentCount = 0;
+		this.unhappinessIndex = [];
+		this.unhappyCount = 0;
 		//initialize the model by filling the 2D array with agents
 		for (let y = 1; y < this.rows - 1; y++){
 			for (let x = 1; x < this.cols - 1; x++){
-					if(floor(random(100)) > freeCells)this.agents[x][y] = new Agent(floor(random(agentKind)), randomizedThreshold == true ? floor(random(1, 9)) * 10 : threshold);
+					if(floor(random(100)) > freeCells){
+						this.agents[x][y] = new Agent(floor(random(agentKind)), randomizedThreshold == true ? floor(random(2, 9)) * 10 : threshold);
+						this.agentCount++;
+					}
 			}
 		}
 	}
@@ -32,11 +38,15 @@ class SchellingsModel{
 	}
 
 	moveAgents(){
-		let freeSpots = emptySpots(this.agents);
+		let freeSpots = emptySpots(this.agents);		
+		this.unhappyCount = 0;
 		for (let y = 1; y < this.rows - 1; y++){
 			for (let x = 1; x < this.cols - 1; x++){
 				if(this.agents[x][y] != null){
-					if(this.agents[x][y].sat < 1)moveAgent(this.agents, x, y, freeSpots);
+					if(this.agents[x][y].sat < 1){
+						moveAgent(this.agents, x, y, freeSpots);
+						this.unhappyCount++;
+					}
 				}
 			}
 		}
@@ -104,6 +114,21 @@ class SchellingsModel{
 				}
 			}
 		}
+	}
+	// this function displays the total satisfaction of the population of the agents
+	displySatisfaction(){
+		let unhappiness = map(this.unhappyCount, 0, this.agentCount, 0, 100);
+		this.unhappinessIndex.push(unhappiness);
+		if(this.unhappinessIndex.length > 100){
+			this.unhappinessIndex.splice(0, 1);
+		}
+		noFill();
+		stroke(0);
+		strokeWeight(5);
+		beginShape();
+		for(let i = 0; i < this.unhappinessIndex.length; i++)vertex(5 + i * 3, 600 - this.unhappinessIndex[i]);
+		endShape();
+		document.getElementById("happinessValue").innerHTML = ":-( level\n" + parseInt(unhappiness) + " %";
 	}
 }
 

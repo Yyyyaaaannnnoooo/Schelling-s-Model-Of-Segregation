@@ -27,7 +27,7 @@ class Agent{
 		strokeWeight(2);
 		stroke(0);
 		noFill();
-		fill(this.agentColors[this.type]);
+		fill(0, this.alpha);
 		beginShape();
 		for(let i = 0; i < this.type + 3; i++){
 			let angle = map(i, 0, this.type + 3, 0 - HALF_PI, TWO_PI - HALF_PI);

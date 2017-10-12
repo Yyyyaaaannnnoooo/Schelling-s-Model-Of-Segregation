@@ -27,6 +27,7 @@ function draw(){
 			SM.checkNeighbour();
 			SM.moveAgents();	
 			SM.show();
+			SM.displySatisfaction();
 		}
 	}
 	//console.log(frameRate());
