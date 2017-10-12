@@ -7,7 +7,7 @@ class Agent{
 	* @param {int} thershold - dafines the percentage of non similar neighbours are tolerated
 	*/
 	constructor(type, threshold){
-		this.sat = 1;//defines the satisfaction of the agent 1 is satisfied and 0 unsatisfied
+		this.sat = 0;//defines the satisfaction of the agent 1 is satisfied and 0 unsatisfied
 		this.type = type;
 		this.t = threshold;
 		this.tu = threshold <= 20 ? this.tu = 100 - map(threshold, 0, 20, 40, 0) : null;

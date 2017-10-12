@@ -1,6 +1,6 @@
 let w, h, agent, SM, gridSize, menuSpace = 300,
 	osc, env,
-	randomizedThersholds = false;
+	randomizedThresholds = false;
 function setup(){
 	w = windowWidth;
 	h = windowHeight;
@@ -22,13 +22,13 @@ function setup(){
 
 function draw(){	
 	if(SM != null){
-		if(frameCount % 15 == 0){
+		// if(frameCount % 15 == 0){
 			background(255);
 			SM.checkNeighbour();
 			SM.moveAgents();	
 			SM.show();
 			SM.displySatisfaction();
-		}
+		// }
 	}
 	//console.log(frameRate());
 }
@@ -36,22 +36,22 @@ function draw(){
 function initModel(){
 	let input1 = document.getElementById("kind").value;
 	let input2 = document.getElementById("size").value;
-	let input3 = document.getElementById("thershold").value;
+	let input3 = document.getElementById("threshold").value;
 	let input4 = document.getElementById("freeCell").value;
-	SM = new SchellingsModel(parseInt(input2), 50, parseInt(input4), parseInt(input1), parseInt(input3), randomizedThersholds);
+	SM = new SchellingsModel(parseInt(input2), 50, parseInt(input4), parseInt(input1), parseInt(input3), randomizedThresholds);
 }
 
 function updateValue(){
 	document.getElementById("theSize").innerHTML = "size: " + document.getElementById("size").value;
 	document.getElementById("theKind").innerHTML = "kind: " + document.getElementById("kind").value;
-	if(!randomizedThersholds)document.getElementById("theThershold").innerHTML = "thershold: " + document.getElementById("thershold").value;
-	document.getElementById("theFreeCell").innerHTML = "freeCell: " + document.getElementById("freeCell").value;
+	if(!randomizedThresholds)document.getElementById("theThreshold").innerHTML = "threshold: " + document.getElementById("threshold").value + " %";
+	document.getElementById("theFreeCell").innerHTML = "freeCell: " + document.getElementById("freeCell").value + " %";
 }
 
-function randomThershold(){
-	randomizedThersholds = !randomizedThersholds;
-	document.getElementById("randomThershold").innerHTML = randomizedThersholds == true ? "SET BACK TO DEFAULT" : "RANDOMIZE THE THERSHOLDS";
-	document.getElementById("theThershold").innerHTML = randomizedThersholds == true ? "RANDOMIZED!" : "thershold: " + document.getElementById("thershold").value;
+function randomThreshold(){
+	randomizedThresholds = !randomizedThresholds;
+	document.getElementById("randomThreshold").innerHTML = randomizedThresholds == true ? "SET BACK TO DEFAULT" : "RANDOMIZE THE THERSHOLDS";
+	document.getElementById("theThreshold").innerHTML = randomizedThresholds == true ? "RANDOMIZED!" : "threshold: " + document.getElementById("threshold").value + " %";
 }
 /**
 AUDIO STUFF
