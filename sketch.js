@@ -1,5 +1,5 @@
 let w, h, agent, SM, gridSize, menuSpace = 300,
-	osc, env,
+	osc, osc2, env,
 	randomizedThresholds = false;
 function setup(){
 	w = windowWidth;
@@ -9,10 +9,14 @@ function setup(){
 	rectMode(CENTER);
 	background(255);
 	// initialize the sound library
+	frameRate(10);
 	osc = new p5.Oscillator();
-	osc.setType('sawtooth');
+	osc.setType('triangle');
+	osc2 = new p5.Oscillator();
+	osc2.setType('sawtooth');
 	env = new p5.Env();
 	osc.start();
+	// osc2.start();
 	env.setADSR(0.001, 0.5, 0.1, 0.5);
 	env.setRange(1, 0);
 	// initModel();
@@ -22,15 +26,12 @@ function setup(){
 
 function draw(){	
 	if(SM != null){
-		// if(frameCount % 15 == 0){
 			background(255);
 			SM.checkNeighbour();
-			SM.moveAgents();	
+			SM.moveAgents();
+			SM.displySatisfaction();				
 			SM.show();
-			SM.displySatisfaction();
-		// }
-	}
-	//console.log(frameRate());
+		}
 }
 
 function initModel(){
@@ -65,8 +66,13 @@ function volumeUp(){
 }
 //improve audio!!!!
 function playSound(num, divider){
-	let midiValue = map(num, 0, gridSize / divider, 60, 100);
+	let midiValue = map(num, 0, document.getElementById("size").value, 20, 100);
+	let frequency = map(num, 0, document.getElementById("size").value, 120, 660);
     var freqValue = midiToFreq(midiValue);
     osc.freq(freqValue);
+    // osc2.freq(frequency);
+    // env.add(osc2);
     env.play(osc, 0, 0.1);
+    // env.play(osc2, 0, 0.1);
+    // env.add(osc2);
 }

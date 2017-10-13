@@ -44,7 +44,7 @@ class SchellingsModel{
 		for (let y = 1; y < this.rows - 1; y++){
 			for (let x = 1; x < this.cols - 1; x++){
 				if(this.agents[x][y] != null){
-					if(this.agents[x][y].sat <= 0.1){
+					if(this.agents[x][y].sat < 1){
 						moveAgent(this.agents, x, y, freeSpots);
 						this.unhappyCount++;
 					}
@@ -69,7 +69,7 @@ class SchellingsModel{
 			newY = arr[index].y;
 			agents[newX][newY] = agents[x][y];
 			agents[x][y] = null;
-			// agents[newX][newY].sat = 1;//reset satisfaction of the agent to 1
+			agents[newX][newY].sat = 1;//reset satisfaction of the agent to 1
 			//we play a note according to the distance the agent had to move
 			d = dist(x, y, newX, newY);
 			playSound(d, floor(gridSize / size + 1));//improve this using this.r or similar
@@ -109,7 +109,7 @@ class SchellingsModel{
 							else this.agents[x][y].sat = 1;
 						if(this.agents[x][y].tu != null && percSameType >= this.agents[x][y].tu)this.agents[x][y].sat = 0;
 						//it could also be possible to decrease the satisfaction to 0 instead of changing it directly
-					} else this.agents[x][y].sat = 1;// if there is noone aroud the agent is satisfied
+					} else this.agents[x][y].sat = 1;// if there is no one aroud the agent is satisfied
 					//reset the counters
 					totalNeighbour = 0;
 					totalSameType = 0;
@@ -129,7 +129,7 @@ class SchellingsModel{
 		stroke(0);
 		strokeWeight(5);
 		beginShape();
-		for(let i = 0; i < this.unhappinessIndex.length; i++)vertex(5 + i * 3, 600 - this.unhappinessIndex[i]);
+		for(let i = 0; i < this.unhappinessIndex.length; i++)vertex(5 + i * 3, 500 - this.unhappinessIndex[i]);
 		endShape();
 		document.getElementById("happinessValue").innerHTML = ":-( level\n" + parseInt(unhappiness) + " %";
 	}
