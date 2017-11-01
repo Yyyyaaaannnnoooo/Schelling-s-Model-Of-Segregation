@@ -4,7 +4,7 @@ class Agent{
 	* constructor for the agent class
 	* @param {int} type - the type of agent, is an integer between 0 and 8
 	* usually are only used to different type but can be interesting with more
-	* @param {int} thershold - dafines the percentage of non similar neighbours are tolerated
+	* @param {int} threshold - dafines the percentage of non similar neighbours are tolerated
 	*/
 	constructor(type, threshold){
 		this.sat = 0;//defines the satisfaction of the agent 1 is satisfied and 0 unsatisfied
